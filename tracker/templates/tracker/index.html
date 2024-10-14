@@ -1,0 +1,30 @@
+{% extends 'tracker/base.html' %} {% block title %}Home -
+ActivityTracker{%endblock %} &nbsp; {% block content %}
+<div class="index-container">
+  <h2>Welcome to your Activity Tracker</h2>
+  <p>Track and manage your daily activities here.</p>
+
+  <h3>Your Activities</h3>
+  <ul class="activity-list">
+    {% for activity in activities %}
+    <a href="{% url 'activity_detail' activity.pk %}" class="main-anc" >
+      <li class="activity-item">
+        <div class="activity-info">
+          <strong> {{ activity.name }} </strong>
+          <span class="activity-date">{{ activity.date }}</span>
+        </div>
+        <div class="activity-score">Score: {{ activity.score }}</div>
+      </li>
+    </a>
+    {% empty %}
+    <p>
+      No activities yet. <a href="{% url 'add_activity' %}">Add one here.</a>
+    </p>
+    {% endfor %}
+  </ul>
+
+  <a class="add-activity-btn" href="{% url 'add_activity' %}"
+    >Add New Activity</a
+  >
+</div>
+{% endblock %}
