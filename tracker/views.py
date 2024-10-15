@@ -33,7 +33,10 @@ def activity_detail(request, pk):
 
 def edit_activity(request, pk):
     activity = get_object_or_404(Activity, pk=pk)
-    time_spent_hours = activity.time_spent.total_seconds() // 3600  # Calculate hours
+    time_spent_hours = activity.time_spent.total_seconds() / 3600
+    
+    # Convert to integer if it's a whole number (like 21.0)
+    time_spent_hours = int(time_spent_hours) if time_spent_hours.is_integer() else time_spent_hours
 
     if request.method == 'POST':
         form = ActivityForm(request.POST, instance=activity)
@@ -41,15 +44,18 @@ def edit_activity(request, pk):
             activity = form.save(commit=False)
             time_spent_hours_input = request.POST.get('time_spent_hours')
             if time_spent_hours_input:
-                activity.time_spent = timedelta(hours=int(time_spent_hours_input))
-            else:
-                activity.time_spent = timedelta()  # or set it to some default value
+                activity.time_spent = timedelta(hours=float(time_spent_hours_input))
             activity.save()
             return redirect('activity_detail', pk=activity.pk)
     else:
         form = ActivityForm(instance=activity)
 
-    return render(request, 'tracker/edit_activity.html', {'form': form, 'activity': activity, 'time_spent_hours': time_spent_hours})
+    return render(request, 'tracker/edit_activity.html', {
+        'form': form, 
+        'activity': activity, 
+        'time_spent_hours': time_spent_hours
+    })
+
 
 
 

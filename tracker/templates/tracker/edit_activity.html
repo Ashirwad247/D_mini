@@ -1,16 +1,14 @@
-{% extends 'tracker/base.html' %} {% block title %}Edit Activity{% endblock %}
+{% extends 'tracker/base.html' %}
+{% block title %}Edit Activity{% endblock %}
 {% block content %}
 <h2>Edit Activity: {{ activity.name }}</h2>
 <form method="POST">
-  {% csrf_token %} {{ form.as_p }}
-  <label for="time_spent_hours">Time Spent (hours):</label>
-  <input
-    type="number"
-    name="time_spent_hours"
-    id="time_spent_hours"
-    value="{{ time_spent_hours }}"
-  />
-  <button type="submit">Save Changes</button>
+   {% csrf_token %}
+    {{ form.as_p }}
+    <label for="time_spent_hours">Time Spent (hours):</label>
+    <input type="number" name="time_spent_hours" min="0" value="{{ time_spent_hours }}" required>
+    <button type="submit">Save Changes</button>
 </form>
 
+<a href="{% url 'activity_detail' activity.pk %}">Cancel</a>  <!-- Link to cancel editing -->
 {% endblock %}
