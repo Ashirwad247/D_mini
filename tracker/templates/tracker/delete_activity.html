@@ -1,15 +1,18 @@
 {% extends 'tracker/base.html' %} {% block title %}Delete Activity{% endblock %}
 {% block content %}
-<h2>Delete Activity: {{ activity.name }}</h2>
-<p>Are you sure you want to delete this activity?</p>
-<p><strong>Description:</strong> {{ activity.description }}</p>
-<p><strong>Date:</strong> {{ activity.date }}</p>
-<p><strong>Time Spent:</strong> {{ activity.time_spent }}</p>
-<p><strong>Score:</strong> {{ activity.score }}</p>
+<div class="activity-detail">
+    <h2>Delete Activity: {{ activity.name }}</h2>
+  <p>Are you sure you want to delete this activity?</p>
+  <p><strong>Description:</strong> {{ activity.description }}</p>
+  <p><strong>Date:</strong> {{ activity.date }}</p>
+  <p><strong>Time Spent:</strong> {{ activity.time_spent }}</p>
+  <p><strong>Score:</strong> {{ activity.score }}</p>
 
-<form method="POST">
-  {% csrf_token %}
-  <button type="submit">Confirm Delete</button>
-</form>
-<a href="{% url 'activity_detail' activity.pk %}">Cancel</a>
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">Confirm Delete</button>
+  </form>
+  <a href="{% url 'activity_detail' activity.pk %}">Cancel</a>
+</div>
+
 {% endblock %}

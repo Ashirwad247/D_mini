@@ -1,8 +1,7 @@
-# Python cache files
+
 __pycache__/
 *.py[cod]
 
-# Virtual environment
 venv/
 env/
 ENV/
@@ -11,8 +10,8 @@ myenv/
 */migrations/*
 !*/migrations/__init__.py
 
-# Environment variables
+
 .env
 
-# Miscellaneous
+
 .DS_Store

@@ -1,7 +1,8 @@
 {% extends 'tracker/base.html' %}
 {% block title %}Edit Activity{% endblock %}
 {% block content %}
-<h2>Edit Activity: {{ activity.name }}</h2>
+<div class="activity-detail">
+    <h2>Edit Activity: {{ activity.name }}</h2>
 <form method="POST">
    {% csrf_token %}
     {{ form.as_p }}
@@ -11,4 +12,6 @@
 </form>
 
 <a href="{% url 'activity_detail' activity.pk %}">Cancel</a>  <!-- Link to cancel editing -->
+</div>
+
 {% endblock %}

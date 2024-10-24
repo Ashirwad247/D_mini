@@ -10,18 +10,15 @@ class Activity(models.Model):
     score = models.IntegerField(default=0)  # Score based on time spent
 
     def save(self, *args, **kwargs):
-        # Factor 1: Base score from time spent
         hours_spent = self.time_spent.total_seconds() / 3600
         base_score = hours_spent * 10  # 10 points per hour
 
-        # Factor 2: Adjust score based on activity difficulty (keywords in description)
         difficulty_keywords = {
             'easy': 1, 'simple': 1, 'moderate': 2, 'hard': 3, 'challenging': 4
         }
         description = self.description.lower()
         difficulty_score = sum(value for word, value in difficulty_keywords.items() if word in description)
         
-        # Factor 3: Adjust score based on activity type (keywords in name)
         activity_type_score = 0
         if "meeting" in self.name.lower():
             activity_type_score = 5
@@ -30,14 +27,11 @@ class Activity(models.Model):
         elif "study" in self.name.lower():
             activity_type_score = 8
         
-        # Factor 4: Time decay - Reduce score if the activity was completed more than 7 days ago
         days_since_activity = (date.today() - self.date).days
         time_decay_factor = max(0, 10 - days_since_activity)  # Score decreases by 1 for each day past 7 days
 
-        # Total score = base score + difficulty + activity type + time decay
         self.score = int(base_score + (difficulty_score * 5) + activity_type_score + time_decay_factor)
 
-        # Save the object
         super().save(*args, **kwargs)
 
     def __str__(self):

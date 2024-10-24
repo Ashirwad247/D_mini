@@ -35,7 +35,7 @@ def edit_activity(request, pk):
     activity = get_object_or_404(Activity, pk=pk)
     time_spent_hours = activity.time_spent.total_seconds() / 3600
     
-    # Convert to integer if it's a whole number (like 21.0)
+  
     time_spent_hours = int(time_spent_hours) if time_spent_hours.is_integer() else time_spent_hours
 
     if request.method == 'POST':
@@ -63,5 +63,5 @@ def delete_activity(request, pk):
     activity = get_object_or_404(Activity, pk=pk)
     if request.method == 'POST':
         activity.delete()
-        return redirect('index')  # Redirect to the activities list page
+        return redirect('index')  
     return render(request, 'tracker/delete_activity.html', {'activity': activity})
